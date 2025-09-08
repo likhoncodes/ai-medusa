@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend
+  fastapi-backend:
+    build:
+      context: .
+      target: development
+    container_name: kogic-fastapi-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./scripts/fastapi_backend:/app
+      - ./data:/app/data
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URL=sqlite:///./data/app.db
+      - SECRET_KEY=your-secret-key-change-in-production
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    networks:
+      - kogic-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Vite Frontend
+  vite-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: kogic-vite-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+      - VITE_ENVIRONMENT=development
+    networks:
+      - kogic-network
+    depends_on:
+      - fastapi-backend
+    restart: unless-stopped
+
+  # PostgreSQL Database (optional upgrade from SQLite)
+  postgres:
+    image: postgres:15-alpine
+    container_name: kogic-postgres
+    environment:
+      - POSTGRES_DB=kogic_db
+      - POSTGRES_USER=kogic_user
+      - POSTGRES_PASSWORD=kogic_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - kogic-network
+    restart: unless-stopped
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    container_name: kogic-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - kogic-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Kogic Sandbox Container
+  kogic-sandbox:
+    image: ubuntu:22.04
+    container_name: kogic-sandbox
+    volumes:
+      - ./sandbox:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - SANDBOX_MODE=development
+      - ALLOWED_COMMANDS=python3,node,npm,curl,wget
+    networks:
+      - kogic-network
+    restart: unless-stopped
+    command: tail -f /dev/null
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_ADMIN
+
+networks:
+  kogic-network:
+    driver: bridge
+    name: kogic-network
+
+volumes:
+  postgres_data:
+  redis_data:
