@@ -48,7 +48,7 @@ class Task:
     priority: TaskPriority
     timeout: int
     retry_count: int
-    created_at: float
+    created_at: Optional[float] = None
     assigned_agent: Optional[str] = None
     started_at: Optional[float] = None
     completed_at: Optional[float] = None
