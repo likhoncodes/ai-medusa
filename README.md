@@ -1,278 +1,333 @@
-# Gemini Backend System
+# 🐍 AI Medusa - Intelligent Automation Platform
 
-A comprehensive, scalable backend system powered by Google's Gemini AI model, featuring advanced data processing capabilities, robust error handling, and seamless API integration.
+> **AI-powered automation platform with browser control, multi-agent execution, and intelligent task processing**
+
+[![GitHub](https://img.shields.io/badge/GitHub-likhoncodes%2Fai--medusa-blue?logo=github)](https://github.com/likhoncodes/ai-medusa)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-15.1.3-black?logo=next.js)](https://nextjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Latest-009688?logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Gemini AI](https://img.shields.io/badge/Gemini-AI-4285F4?logo=google)](https://ai.google.dev/)
 
 ## 🚀 Features
 
-- **Gemini AI Integration**: Leverage Google's advanced Gemini model for intelligent text generation and data analysis
-- **Data Processing**: Advanced data transformation, normalization, aggregation, and validation
-- **API Integration**: RESTful APIs for seamless front-end communication
-- **Error Handling**: Robust error handling with structured logging and validation
-- **Scalable Architecture**: Modular design for easy maintenance and future enhancements
-- **TypeScript**: Full type safety and enhanced developer experience
-- **Browser Automation System**: Comprehensive Python-based browser automation with advanced integration examples
+- **🤖 Multi-Agent AI**: Parallel execution with intelligent task distribution and coordination
+- **🌐 Browser Automation**: Advanced Playwright integration for web scraping and form automation  
+- **⚡ Gemini AI Integration**: Powered by Google's advanced Gemini model for intelligent processing
+- **🔧 FastAPI Backend**: High-performance API with modular architecture and real-time processing
+- **📊 Data Processing**: Advanced data transformation, normalization, aggregation, and validation
+- **🔍 CDP Integration**: Chrome DevTools Protocol for debugging and performance monitoring
+- **🛡️ Secure Sandbox**: Docker containerization with isolated execution environments
+- **📚 OpenAPI Docs**: Comprehensive API documentation with interactive testing
+- **🎯 TypeScript**: Full type safety and enhanced developer experience
+
+## 🏗️ Architecture Overview
+
+\`\`\`plaintext
+ai-medusa/
+├── 🎨 Frontend (Next.js + React)
+│   ├── app/                    # Next.js App Router
+│   ├── components/             # Reusable UI components
+│   └── lib/                    # Utilities and services
+├── 🚀 Backend (FastAPI)
+│   ├── app/domain/            # Business logic layer
+│   ├── app/application/       # Application services
+│   ├── app/infrastructure/    # External integrations
+│   └── app/interfaces/        # API routes
+├── 🤖 Automation Scripts
+│   ├── playwright_custom_actions.py
+│   ├── browser_use_openai_integration.py
+│   ├── cdp_integration_examples.py
+│   └── multi_agent_parallel_execution.py
+└── 🐳 Docker Configuration
+    ├── Dockerfile
+    ├── docker-compose.yml
+    └── requirements.txt
+\`\`\`
 
 ## 📋 Prerequisites
 
-- Node.js 18+ 
-- Google AI Studio API Key (Gemini)
-- Next.js 15+
-- Python 3.8+
-- Playwright
-- OpenAI API Key (for automation scripts)
+- **Node.js 18+** 
+- **Python 3.8+**
+- **Docker & Docker Compose**
+- **Google AI Studio API Key** (Gemini)
+- **OpenAI API Key** (for automation)
 
-## 🛠️ Installation
+## 🛠️ Quick Start
 
-1. **Clone and install dependencies:**
-   \`\`\`bash
-   npm install
-   \`\`\`
+### 1. Clone the Repository
+\`\`\`bash
+git clone https://github.com/likhoncodes/ai-medusa.git
+cd ai-medusa
+\`\`\`
 
-2. **Set up environment variables:**
-   \`\`\`bash
-   # Create .env.local file
-   GEMINI_API_KEY=your_gemini_api_key_here
-   OPENAI_API_KEY=your_openai_api_key_here
-   \`\`\`
+### 2. Environment Setup
+\`\`\`bash
+# Copy environment template
+cp .env.example .env.local
 
-3. **Get your Gemini API Key:**
-   - Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Create a new API key
-   - Add it to your environment variables
+# Add your API keys
+GEMINI_API_KEY=your_gemini_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
+\`\`\`
 
-4. **Get your OpenAI API Key:**
-   - Visit [OpenAI](https://openai.com/)
-   - Create a new API key
-   - Add it to your environment variables
+### 3. Install Dependencies
+\`\`\`bash
+# Frontend dependencies
+npm install
 
-5. **Install Python dependencies for browser automation:**
-   \`\`\`bash
-   pip install playwright asyncio logging dataclasses
-   playwright install chromium
-   \`\`\`
+# Python dependencies for automation
+pip install -r requirements.txt
+playwright install chromium
+\`\`\`
 
-6. **Start the development server:**
-   \`\`\`bash
-   npm run dev
-   \`\`\`
+### 4. Start Development
+\`\`\`bash
+# Start Next.js frontend
+npm run dev
+
+# Start FastAPI backend (in another terminal)
+cd scripts/backend
+python main.py
+
+# Run automation scripts
+python scripts/playwright_custom_actions.py
+\`\`\`
+
+### 5. Docker Deployment
+\`\`\`bash
+# Build and run with Docker Compose
+docker-compose up --build
+
+# Or build individual containers
+npm run docker:build
+npm run docker:run
+\`\`\`
 
 ## 🔧 API Endpoints
 
-### Health Check
+### Core System APIs
+
+#### Health Check
 \`\`\`http
 GET /api/health
 \`\`\`
-Returns system health status and service information.
 
-### Text Generation
+#### Multi-Agent Task Execution
+\`\`\`http
+POST /api/agents/execute
+Content-Type: application/json
+
+{
+  "tasks": [
+    {
+      "type": "web_scraping",
+      "url": "https://example.com",
+      "selectors": ["h1", ".content"]
+    }
+  ],
+  "agents": 3,
+  "priority": "HIGH"
+}
+\`\`\`
+
+#### Browser Automation
+\`\`\`http
+POST /api/browser/automate
+Content-Type: application/json
+
+{
+  "action": "fill_form",
+  "url": "https://example.com/form",
+  "fields": {
+    "email": "user@example.com",
+    "password": "secure123"
+  }
+}
+\`\`\`
+
+#### AI Text Generation
 \`\`\`http
 POST /api/gemini/generate
 Content-Type: application/json
 
 {
-  "prompt": "Explain quantum computing in simple terms",
+  "prompt": "Analyze this data and provide insights",
+  "data": {...},
   "options": {
     "temperature": 0.7,
-    "maxOutputTokens": 500
+    "maxOutputTokens": 1000
   }
 }
 \`\`\`
 
-### Data Processing
+### FastAPI Backend APIs
+
+#### Chat System
 \`\`\`http
-POST /api/data/process
+POST /api/v1/chat/sessions
+GET /api/v1/chat/sessions/{session_id}/messages
+POST /api/v1/chat/sessions/{session_id}/messages
+\`\`\`
+
+#### Sandbox Execution
+\`\`\`http
+POST /api/v1/sandbox/execute
 Content-Type: application/json
 
 {
-  "data": [{"name": "John", "age": 30}],
-  "operation": "transform",
-  "options": {
-    "transformationType": "normalize"
-  }
+  "command": "python script.py",
+  "environment": "python3.8",
+  "timeout": 30
 }
 \`\`\`
 
-**Available Operations:**
-- `transform`: Data transformation (normalize, aggregate, filter, enrich)
-- `analyze`: AI-powered analysis (summary, sentiment, classification, extraction)
-- `validate`: Data validation and quality checks
-- `process`: Custom data processing with AI instructions
+## 🤖 Multi-Agent System
 
-### API Documentation
-\`\`\`http
-GET /api/docs
-\`\`\`
-Returns complete API documentation with examples.
-
-## 🏗️ Architecture
-
-### Core Services
-
-- **GeminiService** (`lib/gemini.ts`): Handles all Gemini AI interactions
-- **DataProcessor** (`lib/data-processor.ts`): Advanced data processing operations
-- **ErrorHandler** (`lib/error-handler.ts`): Centralized error handling and validation
-
-### API Routes
-
-- `/api/health`: System health monitoring
-- `/api/gemini/generate`: Text generation endpoint
-- `/api/data/process`: Data processing endpoint
-- `/api/docs`: API documentation
-
-### Browser Automation Components
-
-#### 1. Playwright Custom Actions (`scripts/playwright_custom_actions.py`)
-- **Smart Form Filling**: Intelligent field detection and multi-strategy form completion
-- **Advanced Screenshots**: Full-page, element-specific, and masked screenshot capture
-- **Structured Text Extraction**: Configurable content extraction with CSS selectors
-- **Network Monitoring**: Wait for network idle and track page load performance
-
-**Key Features:**
-- Multiple field detection strategies (name, id, placeholder, label association)
-- Screenshot masking for sensitive data
-- Comprehensive error handling and logging
-- Realistic browser configuration to avoid detection
-
-#### 2. Browser-Use with OpenAI Integration (`scripts/browser_use_openai_integration.py`)
-- **AI-Guided Automation**: Use OpenAI models for intelligent decision-making
-- **Adaptive Workflows**: Dynamic action planning based on page analysis
-- **Multi-Step Task Execution**: Coordinate complex browser workflows
-- **Task History Tracking**: Comprehensive execution reporting and analysis
-
-**Key Features:**
-- AI-powered page analysis and action recommendation
-- Intelligent task coordination and workflow management
-- Comprehensive task history and performance reporting
-- Error recovery and continuation logic
-
-#### 3. Chrome DevTools Protocol (CDP) Integration (`scripts/cdp_integration_examples.py`)
-- **Performance Monitoring**: Real-time performance metrics and optimization recommendations
-- **Network Analysis**: Request/response tracking and failure detection
-- **Memory Monitoring**: JavaScript heap usage and memory leak detection
-- **JavaScript Debugging**: Breakpoint management and exception handling
-
-**Key Features:**
-- Core Web Vitals monitoring (LCP, CLS, FID)
-- Network request analysis with timing and failure tracking
-- Memory usage monitoring with leak detection
-- Advanced debugging capabilities with breakpoint management
-
-#### 4. Multi-Agent Parallel Execution (`scripts/multi_agent_parallel_execution.py`)
-- **Parallel Processing**: Multiple browser agents working simultaneously
-- **Intelligent Load Balancing**: Task distribution based on agent capabilities
-- **Fault Tolerance**: Error recovery and agent health monitoring
-- **Real-Time Monitoring**: Live performance tracking and reporting
-
-**Key Features:**
-- Agent capability matching for optimal task assignment
-- Priority-based task queue management
-- Comprehensive agent health monitoring and recovery
-- Real-time performance metrics and reporting
-
-## 🔒 Error Handling
-
-The system includes comprehensive error handling:
-
-- **Custom Error Classes**: APIError, ValidationError, GeminiError, DataProcessingError
-- **Structured Logging**: JSON-formatted logs with context
-- **Validation**: Request validation with detailed error messages
-- **Environment Checks**: Automatic validation of required environment variables
-
-## 📊 Data Processing Capabilities
-
-### Transformation Types
-- **Normalize**: Clean and standardize data formats
-- **Aggregate**: Summarize and calculate statistics
-- **Filter**: Remove irrelevant or low-quality data
-- **Enrich**: Add context and insights using AI
-
-### Analysis Types
-- **Summary**: Generate comprehensive summaries
-- **Sentiment**: Analyze emotional tone and sentiment
-- **Classification**: Categorize and organize data
-- **Extraction**: Extract key entities and information
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-\`\`\`bash
-npm run build
-# Deploy to Vercel with environment variables set
-\`\`\`
-
-### Docker
-\`\`\`dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]
-\`\`\`
-
-## 🔧 Configuration
-
-### Environment Variables
-- `GEMINI_API_KEY`: Your Google Gemini API key (required)
-- `NEXT_PUBLIC_API_URL`: Base URL for API endpoints (optional)
-- `OPENAI_API_KEY`: Your OpenAI API key (required for automation scripts)
-
-### Gemini Model Configuration
-Default model: `gemini-1.5-flash`
-- Configurable in `lib/gemini.ts`
-- Supports all Gemini model variants
-
-### Automation Configuration
-
-#### Agent Capabilities
+### Agent Types
 - **WebScraper**: Data extraction, screenshots, content analysis
-- **FormFiller**: Form completion, authentication, validation
+- **FormFiller**: Form completion, authentication, validation  
 - **Tester**: Performance testing, validation, monitoring
 - **Monitor**: Health checks, system monitoring, reporting
 - **GeneralPurpose**: Flexible automation for various tasks
 
-#### Task Priorities
-- **CRITICAL**: High-priority tasks with maximum retry attempts
-- **HIGH**: Important tasks with standard retry logic
-- **NORMAL**: Regular tasks with basic error handling
-- **LOW**: Background tasks with minimal retry attempts
+### Task Priorities
+- **CRITICAL**: Maximum retry attempts, immediate execution
+- **HIGH**: Standard retry logic, priority queue
+- **NORMAL**: Regular processing, balanced resources
+- **LOW**: Background processing, minimal retries
 
-## 📈 Monitoring and Logging
+### Execution Features
+- Parallel task processing across multiple agents
+- Intelligent load balancing based on agent capabilities
+- Real-time monitoring and performance tracking
+- Fault tolerance with automatic error recovery
 
-- Health check endpoint for monitoring
-- Structured JSON logging
-- Error tracking with context
-- Performance metrics available
+## 🌐 Browser Automation Capabilities
+
+### Playwright Integration
+- **Smart Form Filling**: Multi-strategy field detection and completion
+- **Advanced Screenshots**: Full-page, element-specific, masked capture
+- **Network Monitoring**: Request tracking and performance analysis
+- **Content Extraction**: Structured data extraction with CSS selectors
+
+### Chrome DevTools Protocol (CDP)
+- **Performance Monitoring**: Core Web Vitals tracking (LCP, CLS, FID)
+- **Memory Analysis**: Heap usage monitoring and leak detection
+- **Network Analysis**: Request/response tracking with timing data
+- **JavaScript Debugging**: Breakpoint management and exception handling
+
+### AI-Guided Automation
+- **Intelligent Decision Making**: OpenAI-powered action planning
+- **Adaptive Workflows**: Dynamic task execution based on page analysis
+- **Context Awareness**: Smart element detection and interaction
+- **Error Recovery**: Automatic retry and alternative action strategies
+
+## 🔒 Security & Isolation
+
+### Docker Sandbox
+- Isolated execution environments for each task
+- Resource limits and security constraints
+- Network isolation and access controls
+- Automatic cleanup and container management
+
+### API Security
+- JWT authentication for sensitive endpoints
+- Rate limiting and request validation
+- CORS configuration for cross-origin requests
+- Environment variable protection
+
+## 📊 Monitoring & Analytics
+
+### Real-Time Metrics
+- Agent performance and utilization
+- Task completion rates and timing
+- System resource usage
+- Error rates and recovery statistics
+
+### Logging System
+- Structured JSON logging with context
+- Centralized log aggregation
+- Error tracking with stack traces
+- Performance metrics and profiling
+
+## 🚀 Deployment Options
+
+### Production Deployment
+\`\`\`bash
+# Docker Compose (Recommended)
+docker-compose -f docker-compose.prod.yml up -d
+
+# Kubernetes
+kubectl apply -f k8s/
+
+# Vercel (Frontend only)
+vercel deploy
+\`\`\`
+
+### Environment Configuration
+\`\`\`bash
+# Production environment variables
+GEMINI_API_KEY=prod_gemini_key
+OPENAI_API_KEY=prod_openai_key
+DATABASE_URL=postgresql://user:pass@host:5432/db
+REDIS_URL=redis://host:6379
+DOCKER_HOST=unix:///var/run/docker.sock
+\`\`\`
+
+## 🧪 Testing
+
+### Automated Testing
+\`\`\`bash
+# Frontend tests
+npm run test
+
+# Backend tests  
+cd backend && python -m pytest
+
+# Integration tests
+npm run test:integration
+
+# Automation script tests
+python -m pytest scripts/tests/
+\`\`\`
+
+### Manual Testing
+- Interactive API documentation at `/docs`
+- Health check endpoints for system validation
+- Browser automation test suites
+- Multi-agent execution scenarios
 
 ## 🤝 Contributing
 
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+### Development Workflow
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Make your changes and add tests
+4. Commit your changes: `git commit -m 'Add amazing feature'`
+5. Push to the branch: `git push origin feature/amazing-feature`
+6. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 🙏 Acknowledgments
 
-For issues and questions:
-1. Check the API documentation at `/api/docs`
-2. Review the health status at `/api/health`
-3. Check environment variable configuration
-4. Verify Gemini API key is valid
-5. Review automation script documentation and execution reports
+- Google Gemini AI for powerful language processing
+- Playwright team for excellent browser automation
+- FastAPI for high-performance API framework
+- Next.js team for the amazing React framework
 
-## 🔄 Version History
+## 📞 Support & Community
 
-- **v1.0.0**: Initial release with core functionality
-  - Gemini AI integration
-  - Data processing capabilities
-  - Error handling system
-  - API endpoints
-  - Documentation
-  - Browser automation system
+- 🐛 **Issues**: [GitHub Issues](https://github.com/likhoncodes/ai-medusa/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/likhoncodes/ai-medusa/discussions)
+- 📧 **Contact**: [likhoncodes](https://github.com/likhoncodes)
+
+---
+
+<div align="center">
+  <strong>Built with ❤️ by <a href="https://github.com/likhoncodes">likhoncodes</a></strong>
+</div>
